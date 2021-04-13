@@ -50,7 +50,7 @@
             @mouseleave="leave"
             @mousemove="onMouseMoveSmall($event)"
           >
-            <img src="../../assets/img/20771746_1609919598.jpeg" alt />
+            <img :src="$store.state.imagePath +appointData.image" alt />
             <div class="small-box" ref="small" v-show="isShow"></div>
           </div>
           <ul>
@@ -64,10 +64,10 @@
         <div class="x-detail-box-right">
           <div class="show-box" v-show="isShow">
             <div class="showImg" ref="showImg">
-              <img src="../../assets/img/20771746_1609919598.jpeg" alt />
+              <img :src="$store.state.imagePath +appointData.image" alt />
             </div>
           </div>
-          <b>长沙夜总会</b>
+          <b>{{appointData.title}}</b>
           <p>暂无价格</p>
         </div>
       </div>
@@ -76,7 +76,7 @@
       <div class="description-of-products">
         <div class="products-top">产品说明</div>
         <div class="products-bom">
-          <img src="../../assets/img/20771746_1609919598.jpeg" alt />
+          <img :src="$store.state.imagePath +appointData.image" alt />
         </div>
       </div>
       <!-- //相关产品 -->
@@ -84,33 +84,13 @@
         <div class="related-top">相关产品</div>
         <div class="related-bom">
           <el-carousel :interval="40000" type="card" height="250px">
-            <el-carousel-item>
-              <a href="#">
+            <el-carousel-item v-for="item in dataLists" :key="item.id" >
+              <a href="#" @click="onClickSelect(item.id)">
                 <div class="lbt-box">
                   <div class="lbt-box-img">
-                    <img src="../../assets/img/20771746_1609919598.jpeg" alt />
+                    <img :src="$store.state.imagePath +item.image" alt />
                   </div>
-                  <p>长沙酒吧</p>
-                </div>
-              </a>
-            </el-carousel-item>
-            <el-carousel-item>
-              <a href="#">
-                <div class="lbt-box">
-                  <div class="lbt-box-img">
-                    <img src="../../assets/img/20771746_1609919598.jpeg" alt />
-                  </div>
-                  <p>长沙酒吧</p>
-                </div>
-              </a>
-            </el-carousel-item>
-            <el-carousel-item>
-              <a href="#">
-                <div class="lbt-box">
-                  <div class="lbt-box-img">
-                    <img src="../../assets/img/20771746_1609919598.jpeg" alt />
-                  </div>
-                  <p>长沙酒吧</p>
+                  <p>{{item.title}}</p>
                 </div>
               </a>
             </el-carousel-item>
@@ -126,6 +106,8 @@ export default {
   data() {
     return {
       isShow: false, //蒙层显示隐藏
+      dataLists:[],//全部数据
+      appointData:{},//指定数据
     };
   },
   methods: {
@@ -174,6 +156,23 @@ export default {
       this.$refs.showImg.style.left = -x * 2 + "px";
       this.$refs.showImg.style.top = -y * 2 + "px";
     },
+    //选择产地
+    onClickSelect(id){
+      var list = this.dataLists.filter(val => val.id == id);
+      this.appointData = list[0];
+    }
+  },
+  //初始化
+  created() {
+    let id = this.$route.params.id;
+     var url = 'http://49.235.93.38:82/index.php/api/ambient/list';
+    this.$axios.get(url).then((data)=> {
+      if(data.data&& data.status == 200){
+        this.dataLists = data.data;
+        var list = this.dataLists.filter(val => val.id == id)
+        this.appointData = list[0];
+      }
+    })
   },
 };
 </script>

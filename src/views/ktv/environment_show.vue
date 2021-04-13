@@ -34,21 +34,13 @@
         <em>环境展示</em>
       </div>
       <div class="j-night">
-        <a href="javascript:;">夜场环境</a>
+        <a href="javascript:;" @click="onClickList(1)">夜场环境</a>
       </div>
       <div class="j-private">
         <ul class="clearfix">
-          <li @click="onClickList">
-            <img src="@/assets/img/image_12.jpeg" alt="" />
-            <span>长沙夜总会</span>
-          </li>
-          <li @click="onClickList">
-            <img src="@/assets/img/image_7.jpeg" alt="" />
-            <span>长沙市场</span>
-          </li>
-          <li @click="onClickList">
-            <img src="@/assets/img/image_13.jpeg" alt="" />
-            <span>长沙酒吧</span>
+          <li @click="onClickList(item.id)" v-for="item in dataList" :key = "item.id">
+            <img :src="$store.state.imagePath +item.image" alt="" />
+            <span>{{item.title}}</span>
           </li>
         </ul>
       </div>
@@ -75,12 +67,25 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      dataList:[],
+    };
   },
   methods: {
-    onClickList() {
-      this.$router.push("ktvenvironmentShowList");
+    onClickList(id) {
+      this.$router.push("ktvenvironmentShowList/"+ id);
     },
+  },
+  //初始化
+  created() {
+    var url = 'http://49.235.93.38:82/index.php/api/ambient/list';
+    this.$axios.get(url).then((data)=> {
+      // console.log(data);
+      if(data.data&& data.status == 200){
+        this.dataList = data.data;
+        console.log(this.dataList);
+      }
+    })
   },
 };
 </script>
