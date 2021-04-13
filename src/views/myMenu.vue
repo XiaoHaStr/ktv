@@ -245,6 +245,7 @@ export default {
     this.route = location.hash.substring(1);
     this.$axios.get("/index.php/api/footer/get").then((res) => {
       this.footer = res.data;
+      this.$store.state.bannerCode = res.data;
     });
   },
   mounted() {
@@ -291,7 +292,6 @@ export default {
     },
     getPath() {
       let id = this.$route.params.id;
-      console.log(id);
       // 路由改变导航栏高亮显示跟随改变
       switch (this.$route.path) {
         case "/index":
@@ -301,7 +301,6 @@ export default {
           this.route = this.$route.path;
           break;
         case "/model_shows":
-          console.log(this.$route.path);
           this.route = this.$route.path;
           break;
         case "/model/" + id:

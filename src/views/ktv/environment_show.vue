@@ -4,19 +4,26 @@
     <!-- banner start -->
     <div class="j-banner">
       <div class="j-banner-image">
+        <img
+          v-if="$store.state.bannerFlag"
+          :src="$store.state.imagePath + $store.state.bannerData[0].image"
+          alt=""
+          class="j-b-i"
+        />
         <div class="j-introduce w1200">
-          <div class="j-product">
+          <div class="j-product" v-if="$store.state.bannerFlag">
             <h3>
-              全场所有啤酒均可享受买二送一，还有更多豪礼等着你!
-              <br />当晚本包间消费满6666以上，当晚可赠送豪华名宿酒店一套，限当天使用。
+              {{ $store.state.bannerData[0].content }}
             </h3>
-            <p>小包低消1080元 中包低消1280 大包低消1380 豪包低消2680</p>
           </div>
           <div class="j-code">
-            <img src="@/assets/img/image_2.png" alt="" />
+            <img
+              :src="$store.state.imagePath + $store.state.bannerCode.image"
+              alt=""
+            />
           </div>
           <div class="j-relation">
-            <span>T：13688143752</span>
+            <span>T：{{ $store.state.bannerCode.phone }}</span>
           </div>
           <div class="j-cur">
             <span class="j-span"></span>
@@ -38,9 +45,13 @@
       </div>
       <div class="j-private">
         <ul class="clearfix">
-          <li @click="onClickList(item.id)" v-for="item in dataList" :key = "item.id">
-            <img :src="$store.state.imagePath +item.image" alt="" />
-            <span>{{item.title}}</span>
+          <li
+            @click="onClickList(item.id)"
+            v-for="item in dataList"
+            :key="item.id"
+          >
+            <img :src="$store.state.imagePath + item.image" alt="" />
+            <span>{{ item.title }}</span>
           </li>
         </ul>
       </div>
@@ -68,24 +79,22 @@
 export default {
   data() {
     return {
-      dataList:[],
+      dataList: [],
     };
   },
   methods: {
     onClickList(id) {
-      this.$router.push("ktvenvironmentShowList/"+ id);
+      this.$router.push("ktvenvironmentShowList/" + id);
     },
   },
   //初始化
   created() {
-    var url = 'http://49.235.93.38:82/index.php/api/ambient/list';
-    this.$axios.get(url).then((data)=> {
-      // console.log(data);
-      if(data.data&& data.status == 200){
+    var url = "http://49.235.93.38:82/index.php/api/ambient/list";
+    this.$axios.get(url).then((data) => {
+      if (data.data && data.status == 200) {
         this.dataList = data.data;
-        console.log(this.dataList);
       }
-    })
+    });
   },
 };
 </script>

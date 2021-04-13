@@ -91,6 +91,12 @@ li {
     position: absolute;
     top: 353px;
     left: 46.5%;
+    width: 134px;
+    height: 134px;
+}
+
+.j-code img {
+    width: 100%;
 }
 
 .j-relation {
@@ -107,7 +113,6 @@ li {
     text-align: center;
     color: #fff;
     font-size: 16px;
-    cursor: pointer;
 }
 
 .j-relation:hover {
@@ -124,11 +129,6 @@ li {
     border: 1px solid #fff;
     border-radius: 50%;
 }
-
-.j-span {
-    cursor: pointer;
-}
-
 
 /* banner end */
 

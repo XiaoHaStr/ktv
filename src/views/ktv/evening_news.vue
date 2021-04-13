@@ -1,21 +1,28 @@
 <template>
   <div>
-    <!-- banner start -->
+   <!-- banner start -->
     <div class="j-banner">
       <div class="j-banner-image">
+        <img
+          v-if="$store.state.bannerFlag"
+          :src="$store.state.imagePath + $store.state.bannerData[0].image"
+          alt=""
+          class="j-b-i"
+        />
         <div class="j-introduce w1200">
-          <div class="j-product">
+          <div class="j-product" v-if="$store.state.bannerFlag">
             <h3>
-              全场所有啤酒均可享受买二送一，还有更多豪礼等着你!
-              <br />当晚本包间消费满6666以上，当晚可赠送豪华名宿酒店一套，限当天使用。
+              {{ $store.state.bannerData[0].content }}
             </h3>
-            <p>小包低消1080元 中包低消1280 大包低消1380 豪包低消2680</p>
           </div>
           <div class="j-code">
-            <img src="@/assets/img/image_2.png" alt="" />
+            <img
+              :src="$store.state.imagePath + $store.state.bannerCode.image"
+              alt=""
+            />
           </div>
           <div class="j-relation">
-            <span>T：13688143752</span>
+            <span>T：{{ $store.state.bannerCode.phone }}</span>
           </div>
           <div class="j-cur">
             <span class="j-span"></span>
@@ -161,10 +168,8 @@ export default {
     },
     onClickevening: function () {
       this.$router.push("/evening_news");
-      console.log(12);
     },
     onClicksju: function (id) {
-      console.log(id);
       this.$router.push("/chengdu_evening/" + id);
     },
   },

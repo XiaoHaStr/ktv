@@ -1,21 +1,28 @@
 <template>
   <div class="environment">
-    <!-- banner start -->
+   <!-- banner start -->
     <div class="j-banner">
       <div class="j-banner-image">
+        <img
+          v-if="$store.state.bannerFlag"
+          :src="$store.state.imagePath + $store.state.bannerData[0].image"
+          alt=""
+          class="j-b-i"
+        />
         <div class="j-introduce w1200">
-          <div class="j-product">
+          <div class="j-product" v-if="$store.state.bannerFlag">
             <h3>
-              全场所有啤酒均可享受买二送一，还有更多豪礼等着你!
-              <br />当晚本包间消费满6666以上，当晚可赠送豪华名宿酒店一套，限当天使用。
+              {{ $store.state.bannerData[0].content }}
             </h3>
-            <p>小包低消1080元 中包低消1280 大包低消1380 豪包低消2680</p>
           </div>
           <div class="j-code">
-            <img src="@/assets/img/image_2.png" alt />
+            <img
+              :src="$store.state.imagePath + $store.state.bannerCode.image"
+              alt=""
+            />
           </div>
           <div class="j-relation">
-            <span>T：13688143752</span>
+            <span>T：{{ $store.state.bannerCode.phone }}</span>
           </div>
           <div class="j-cur">
             <span class="j-span"></span>
@@ -186,94 +193,97 @@ export default {
 .environment {
   background-color: #fff;
 }
+
+
 /* banner start */
 
 .j-banner {
-  position: relative;
-  width: 100%;
-  height: 100%;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .j-banner-image {
-  width: 100%;
-  height: 600px;
-  background-size: 100%;
+    width: 100%;
+    height: 600px;
+    background-size: 100%;
 }
 
 .j-b-i {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .j-product {
-  position: absolute;
-  width: 803px;
-  background-color: rgba(102, 0, 0, 0.7);
-  top: 130px;
-  left: 50%;
-  transform: translateX(-50%);
+    position: absolute;
+    width: 803px;
+    background-color: rgba(102, 0, 0, .7);
+    top: 130px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .j-product h3 {
-  color: rgb(255, 255, 255);
-  text-align: center;
-  line-height: 35px;
-  padding: 42px 0 24px 0;
-  font-size: 22px;
-  font-weight: 700;
-  font-family: "幼圆";
-  z-index: 7;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    line-height: 35px;
+    padding: 42px 0 24px 0;
+    font-size: 22px;
+    font-weight: 700;
+    font-family: "幼圆";
+    z-index: 7;
 }
 
 .j-product p {
-  text-align: center;
-  color: #fbf900;
-  padding-bottom: 29px;
-  font-size: 20px;
-  font-family: "幼圆";
-  font-weight: 400;
+    text-align: center;
+    color: #FBF900;
+    padding-bottom: 29px;
+    font-size: 20px;
+    font-family: "幼圆";
+    font-weight: 400;
 }
 
 .j-code {
-  position: absolute;
-  top: 353px;
-  left: 46.5%;
+    position: absolute;
+    top: 353px;
+    left: 46.5%;
+    width: 134px;
+    height: 134px;
+}
+
+.j-code img {
+    width: 100%;
 }
 
 .j-relation {
-  position: absolute;
-  top: 499px;
-  left: 46.5%;
-  width: 135px;
-  height: 45px;
-  background-color: #d9534f;
+    position: absolute;
+    top: 499px;
+    left: 46.5%;
+    width: 135px;
+    height: 45px;
+    background-color: #D9534F;
 }
 
 .j-relation span {
-  line-height: 45px;
-  text-align: center;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
+    line-height: 45px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
 }
 
 .j-relation:hover {
-  background-color: #c9302c;
+    background-color: #c9302c;
 }
 
 .j-cur span {
-  position: absolute;
-  bottom: 15px;
-  left: 49.5%;
-  display: block;
-  width: 17px;
-  height: 17px;
-  border: 1px solid #fff;
-  border-radius: 50%;
-}
-
-.j-span {
-  cursor: pointer;
+    position: absolute;
+    bottom: 15px;
+    left: 49.5%;
+    display: block;
+    width: 17px;
+    height: 17px;
+    border: 1px solid #fff;
+    border-radius: 50%;
 }
 
 /* banner end */

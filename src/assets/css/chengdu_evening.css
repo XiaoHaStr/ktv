@@ -87,7 +87,9 @@
     font-weight: 400;
     color: #333333;
 }
+
 .chengdu-r img {
+    display: block;
     width: 554px;
     height: 571px;
     margin: auto;
@@ -103,9 +105,16 @@
 .page-box .previous-page i,
 .page-box .next-page i {
     font-size: 12px;
+    color: #444;
 }
 
 .page-box .previous-page a,
 .page-box .next-page a {
     font-size: 12px;
+    color: #444;
+}
+
+.page-box .previous-page a:hover,
+.page-box .next-page a:hover{
+    color: #2090FF;
 }

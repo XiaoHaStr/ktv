@@ -8,7 +8,8 @@ export default new Vuex.Store({
     imagePath: '//49.235.93.38:82', // 图片域名
     modelData: [], // 模特信息
     bannerData: [],
-    bannerFlag: false
+    bannerCode: [],
+    bannerFlag: false,
   },
   mutations: {},
   actions: {},

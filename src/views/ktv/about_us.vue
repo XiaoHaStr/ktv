@@ -57,11 +57,10 @@ export default {
   },
   created() {
     this.$axios.get("/index.php/api/about_us/list").then((res) => {
-      console.log(res.data);
       this.listData1 = res.data[0];
       this.listData2 = res.data[1];
       this.listData3 = res.data[2];
     });
-  }
+  },
 };
 </script>

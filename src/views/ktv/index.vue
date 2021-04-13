@@ -17,10 +17,13 @@
             </h3>
           </div>
           <div class="j-code">
-            <img v-lazy="require('../../assets/img/image_2.png')" alt="" />
+            <img
+              :src="$store.state.imagePath + $store.state.bannerCode.image"
+              alt=""
+            />
           </div>
           <div class="j-relation">
-            <span>T：13688143752</span>
+            <span>T：{{ $store.state.bannerCode.phone }}</span>
           </div>
           <div class="j-cur">
             <span class="j-span"></span>
@@ -43,7 +46,7 @@
             <li
               v-for="item in environmentData"
               :key="item.id"
-              @click="$router.push('/environment_show_list')"
+              @click="$router.push('/ktvenvironmentShowList/' + item.id)"
             >
               <div class="j-magnify">
                 <img :src="$store.state.imagePath + item.image" alt="" />
