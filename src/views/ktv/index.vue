@@ -85,9 +85,11 @@
             <div class="j-animated animated" id="dowebok">
               <p class="j-about-p">关于/ABOUT</p>
             </div>
-            <h2 class="animated j-rotateIn" id="dowebok">锦缘国际夜总会</h2>
+            <h2 class="animated j-rotateIn" id="dowebok">
+              {{ $store.state.bannerCode.title }}
+            </h2>
             <p class="p-play animated" id="dowebok">
-              长沙夜总会，长沙夜场，长沙酒吧各种模特佳丽【13688143752】，设备齐<br />全，装修高端，资源丰富，生意每天开到爆，欢迎随时预定包厢
+              {{ $store.state.bannerCode.describe }}
             </p>
             <a href="javascript:;" @click="$router.push('/about_us')"
               >了解详情</a

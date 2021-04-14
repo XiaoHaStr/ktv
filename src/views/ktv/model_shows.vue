@@ -144,7 +144,7 @@ export default {
     },
   },
   created() {
-    var url = "/index.php/api/models/list";
+    var url = "/index.php/api/models/list?pageNumber=1&pageSize=6";
     this.$axios.get(url).then((response) => {
       if (response.status == 200 && response.statusText == "OK") {
         this.modelData = response.data;

@@ -15,12 +15,9 @@
         </div>
         <div class="chengdu-r">
           <div class="chengdu-txet">{{ informationl.title }}</div>
-          <div class="writing">
-            <p>{{ content1 }}</p>
-            <img :src="msg + contentImg" alt="" />
-            <p>{{ content2 }}</p>
+          <div class="writing markdown-body">
+            <VueMarkdown :source="content"></VueMarkdown>
           </div>
-          <!-- <img :src="msg + informationl.image" alt="" /> -->
           <div class="page-box">
             <div class="next-page">
               <div v-show="showPrise">
@@ -49,8 +46,12 @@
 <style scoped src="@/assets/css/chengdu_evening.css">
 </style>
 <script>
+import VueMarkdown from "vue-markdown";
 import axios from "axios";
 export default {
+  components: {
+    VueMarkdown, // 注入组件
+  },
   data() {
     return {
       informationl: [],
@@ -60,9 +61,7 @@ export default {
       showprevious: true,
       msg: "http://49.235.93.38:82/",
       datares: [],
-      content1: "",
-      content2: "",
-      contentImg: "",
+      content: "",
     };
   },
   methods: {
@@ -84,24 +83,16 @@ export default {
       this.datares = res.data;
       let datas = this.$route.params.id - 1;
       this.informationl = res.data[datas];
-      this.content1 = this.informationl.content.substring(
-        0,
-        this.informationl.content.indexOf("![") - 1
-      );
-      this.content2 = this.informationl.content.substring(
-        this.informationl.content.indexOf("![") - 1
-      );
-      this.contentImg = this.content2.substring(
-        this.content2.indexOf("(") + 1,
-        this.content2.indexOf(' "')
-      );
-      this.content2 = this.content2.substring(this.content2.indexOf(")") + 1);
+
+      this.content = this.informationl.content;
+
       if (this.informationl.id == 1) {
         this.showPrise = false;
         this.journalismtype = res.data[datas + 1];
       }
       if (this.informationl.id == 2) {
         this.informationltwo = res.data[datas - 1];
+        console.log(this.informationltwo);
       }
       if (datas == this.datares.length - 1) {
         this.showprevious = false;

@@ -190,6 +190,7 @@ li {
 .j-private-idx li {
     background-color: #fff;
     text-align: center;
+    cursor: pointer;
 }
 
 .j-private-idx img {
@@ -262,6 +263,7 @@ li {
     margin: 0 auto;
     margin-top: 79px;
     margin-bottom: 121px;
+    cursor: pointer;
 }
 
 .j-examine a {
@@ -311,6 +313,9 @@ li {
 .j-row_11 .p-play {
     font-size: 18px;
     line-height: 30px;
+    width: 610px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .j-row_11 a {
@@ -382,6 +387,7 @@ li {
 
 .j-inner li {
     padding-top: 12px;
+    cursor: pointer;
 }
 
 .j-inner ul {
@@ -467,6 +473,7 @@ li {
 
 .j-img-left {
     margin-right: 93px;
+    cursor: pointer;
 }
 
 .j-shift {
@@ -558,6 +565,7 @@ li {
 
 .j-img-bottom img {
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .j-image-play {

@@ -30,7 +30,7 @@
             </li>
           </ul>
           <div class="box animate__animated animate__lightSpeedInRight">
-            <div id="items" class="q_items">
+            <div id="items" class="q_items ma">
               <h1>{{ listData1.title }}</h1>
               <pre>{{ listData1.content }}</pre>
             </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-   <!-- banner start -->
+    <!-- banner start -->
     <div class="j-banner">
       <div class="j-banner-image">
         <img

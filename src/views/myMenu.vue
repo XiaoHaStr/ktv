@@ -273,7 +273,13 @@ export default {
             )
             .then((res) => {
               if (res.status == 200 && res.statusText == "OK") {
-                alert(res.data.msg);
+                this.$confirm(res.data.msg, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  callback: () => {
+                    this.formFlag = false;
+                  },
+                });
               }
             });
         } else {
