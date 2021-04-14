@@ -38,12 +38,6 @@
       <el-breadcrumb-item :to="{ path: '/environment_show' }">
         <a>环境展示</a>
       </el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/environment_show' }">
-        <a>夜场环境</a>
-      </el-breadcrumb-item>
-      <el-breadcrumb-item>
-        <a href="#">长沙夜总会 </a>
-      </el-breadcrumb-item>
     </el-breadcrumb>
 
     <div class="Bigbox" ref="Bigbox">
@@ -61,11 +55,19 @@
             <div class="small-box" ref="small" v-show="isShow"></div>
           </div>
           <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li>
+              <div class="lis" @click="onClickWx"></div>
+              <div class="qrcode" v-show="isQrcode">
+                <div class="qrcode-top">
+                  <span>分享到微信</span>
+                  <b @click="onClickX">X</b>
+                </div>
+                <div id="qrcode" ref="qrcode" class="qrcodeImg"></div>
+              </div>
+            </li>
+            <li @click="onClickLiTwo"></li>
+            <li @click="onClickLiThree"></li>
+            <li @click="onClickLiFour"></li>
           </ul>
         </div>
         <div class="x-detail-box-right">
@@ -91,7 +93,7 @@
         <div class="related-top">相关产品</div>
         <div class="related-bom">
           <el-carousel :interval="40000" type="card" height="250px">
-            <el-carousel-item v-for="item in dataLists" :key="item.id" >
+            <el-carousel-item v-for="item in dataLists" :key="item.id">
               <a href="#" @click="onClickSelect(item.id)">
                 <div class="lbt-box">
                   <div class="lbt-box-img">
@@ -109,12 +111,14 @@
 </template>
 
 <script>
+import QRCode from "qrcodejs2";
 export default {
   data() {
     return {
       isShow: false, //蒙层显示隐藏
-      dataLists:[],//全部数据
-      appointData:{},//指定数据
+      dataLists: [], //全部数据
+      appointData: {}, //指定数据
+      isQrcode: false, //二维码层
     };
   },
   methods: {
@@ -164,22 +168,56 @@ export default {
       this.$refs.showImg.style.top = -y * 2 + "px";
     },
     //选择产地
-    onClickSelect(id){
-      var list = this.dataLists.filter(val => val.id == id);
+    onClickSelect(id) {
+      var list = this.dataLists.filter((val) => val.id == id);
       this.appointData = list[0];
+    },
+     //点击微信
+    onClickWx(e) {
+      console.log(window.location.href);
+      var url = window.location.href;
+      this.isQrcode = true;
+      this.qrCode(url);
+      e.stopPropagation();
+    },
+    qrCode(url) {
+      let qrcode = new QRCode("qrcode", {
+        width: 150, //图像宽度
+        height: 150, //图像高度
+        colorDark: "#000000", //前景色
+        colorLight: "#ffffff", //背景色
+        typeNumber: 4,
+        correctLevel: QRCode.CorrectLevel.H, //容错级别 容错级别有：（1）QRCode.CorrectLevel.L （2）QRCode.CorrectLevel.M （3）QRCode.CorrectLevel.Q （4）QRCode.CorrectLevel.H
+      });
+      qrcode.clear(); //清除二维码
+      qrcode.makeCode(url); //生成另一个新的二维码
+    },
+    //点击二维码X
+    onClickX(){
+      this.isQrcode=false;
+    },
+    //点击分享朋友圈
+    onClickLiTwo(){
+      location.href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?to=pengyou&url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602044948&pics=&title=%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9&summary=%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.";
+    },
+    onClickLiThree(){
+      location.href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602045873&title=%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9&pics=&summary=%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.&desc=%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.";
+    },
+    onClickLiFour(){
+      location.href="https://service.weibo.com/share/share.php?appkey=583395093&title=%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%20-%20%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.%20%20&url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602045914&source=bshare&retcode=0&ralateUid=#_loginLayer_1618403678981";
     }
   },
   //初始化
   created() {
     let id = this.$route.params.id;
-     var url = 'http://49.235.93.38:82/index.php/api/ambient/list';
-    this.$axios.get(url).then((data)=> {
-      if(data.data&& data.status == 200){
+    var url = "http://49.235.93.38:82/index.php/api/ambient/list";
+    this.$axios.get(url).then((data) => {
+      if (data.data && data.status == 200) {
         this.dataLists = data.data;
-        var list = this.dataLists.filter(val => val.id == id)
+        var list = this.dataLists.filter((val) => val.id == id);
         this.appointData = list[0];
       }
-    })
+    });
   },
 };
 </script>
@@ -350,6 +388,7 @@ export default {
   height: 100%;
 }
 .x-detail-box-left ul {
+  position: relative;
   margin-top: 10px;
   display: flex;
   justify-content: flex-end;
@@ -359,9 +398,42 @@ export default {
   height: 16px;
   margin-right: 10px;
 }
-.x-detail-box-left li:nth-child(1) {
+.x-detail-box-left li:nth-child(1) .lis {
+  width: 100%;
+  height: 100%;
   background: url("http://static.bshare.cn/frame/images/logos/s4/weixin.png")
     no-repeat;
+}
+.qrcodeImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.qrcode {
+  position: absolute;
+  left: 100px;
+  top: -100px;
+  width: 200px;
+  height: 250px;
+  background-color: #fff;
+  border: 4px solid gray;
+  border-radius: 5px;
+  z-index: 1000;
+}
+.qrcode-top {
+  line-height: 30px;
+  line-height: 30px;
+  font-size: 12px;
+  color: #666;
+  background-color: rgb(241, 240, 240);
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  margin-bottom: 40px;
+}
+.qrcode-top b {
+  cursor:pointer;
 }
 .x-detail-box-left li:nth-child(2) {
   background: url("../../assets/img/top_logos_sprite.png") no-repeat 0 -216px;
@@ -372,10 +444,10 @@ export default {
 .x-detail-box-left li:nth-child(4) {
   background: url("../../assets/img/top_logos_sprite.png") no-repeat 0 -270px;
 }
-.x-detail-box-left li:nth-child(5) {
-  background: url(http://static.bshare.cn/frame/images/logos/s4/more-style-addthis.png)
-    no-repeat;
-}
+// .x-detail-box-left li:nth-child(5) {
+//   background: url(http://static.bshare.cn/frame/images/logos/s4/more-style-addthis.png)
+//     no-repeat;
+// }
 .x-detail-box-right {
   position: relative;
   width: 770px;
