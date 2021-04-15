@@ -6,12 +6,12 @@
         <div class="l-icon-two"></div>
         <a href="javascript:;" @click="$router.push('/index')"><h4>首页</h4></a>
         <a href="javascript:;" @click="onClickevening"><h4>>> 夜场新闻</h4></a>
-        <a href="javascript:;" @click="onClickevening"><h4>>> 长沙夜场</h4></a>
+        <a href="javascript:;" @click="onClickevening"><h4>>> {{informationl.name}}</h4></a>
         <span><i>>></i> {{ informationl.title }}</span>
       </div>
       <div class="chengdu-box">
         <div class="chengdu-l">
-          <a href="javascript:;">长沙夜场</a>
+          <a href="javascript:;">{{informationl.name}}</a>
         </div>
         <div class="chengdu-r">
           <div class="chengdu-txet">{{ informationl.title }}</div>
@@ -81,11 +81,11 @@ export default {
   created() {
     axios.get("/index.php/api/journalism/list").then((res) => {
       this.datares = res.data;
+      
       let datas = this.$route.params.id - 1;
       this.informationl = res.data[datas];
-
+      console.log(this.informationl);
       this.content = this.informationl.content;
-
       if (this.informationl.id == 1) {
         this.showPrise = false;
         this.journalismtype = res.data[datas + 1];

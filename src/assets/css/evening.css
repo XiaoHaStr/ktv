@@ -162,26 +162,33 @@
     height: 50px;
     /* line-height: 40px; */
     border-bottom: 2px solid rgb(204, 204, 204);
+    display: flex;
 }
 
 .l-journalism .box-hzi {
     display: flex;
-    width: 220px;
+    width: 100px;
     height: 30px;
-    line-height: 39px;
+    margin-top: 10px;
     margin-left: 5px;
+    
+}
+
+.l-journalism a:hover {
+    color: rgb(5, 111, 215);
 }
 
 .l-journalism .l-dot {
     width: 3px;
     height: 3px;
-    margin: 22px 5px 0 10px;
+    margin: 18px 5px 0 10px;
     background-color: rgb(85, 85, 85);
 }
 
 .l-journalism a {
     color: rgb(68, 68, 68);
     height: 16px;
+    line-height: 30px;
 }
 
 .l-MoBody {
@@ -208,6 +215,9 @@
     margin-left: 6px;
     line-height: 31px;
     border-bottom: 1px dashed rgb(204, 204, 204);
+}
+.l-MoBody .l-xd .f-lex a:hover {
+    color: rgb(5, 111, 215);
 }
 
 .l-MoBody .f-lex .l-dot {

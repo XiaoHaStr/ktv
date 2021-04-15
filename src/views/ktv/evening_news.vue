@@ -52,15 +52,23 @@
               >
             </div>
             <div class="l-journalism">
-              <div class="box-hzi">
-                <div class="l-dot"></div>
-                <a href="javascript:;"><h5>长沙夜场</h5></a>
+              <div
+                v-for="(item, index) in showstion"
+                :key="index"
+                @click="onClickshowstion(item.id)"
+              >
+                <div class="box-hzi">
+                  <div class="l-dot"></div>
+                  <a href="javascript:;"
+                    ><h5>{{ item.name }}</h5></a
+                  >
+                </div>
               </div>
             </div>
             <div class="lx-box">
               <div class="l-icon-one"></div>
               <a href="javascript:;" @click="onClickevening"
-                ><h5>夜场新闻</h5></a
+                ><h5>{{ titleName }}</h5></a
               >
             </div>
             <div class="l-MoBody">
@@ -118,6 +126,9 @@ export default {
   data() {
     return {
       information: [],
+      // 夜场新闻2tba切换的数据
+      showstion: [],
+      titleName: "",
       pageNumber: 1,
       pageSize: 21,
       pageSum: null,
@@ -137,9 +148,18 @@ export default {
       }
     });
     axios
-      .get("/index.php/api/journalism/list?pageNumber=1&pageSize=21")
+      .get(
+        "/index.php/api/journalism/list?pageNumber=1&pageSize=21&journalismtypeid=1"
+      )
       .then((res) => {
         this.information = res.data;
+      });
+    axios
+      .get("/index.php/api/journalismtype/list?pageNumber=1&pageSize=21")
+      .then((res) => {
+        this.showstion = res.data;
+        this.titleName = this.showstion[0].name;
+        console.log(this.showstion);
       });
   },
   methods: {
@@ -171,6 +191,21 @@ export default {
     },
     onClicksju: function (id) {
       this.$router.push("/chengdu_evening/" + id);
+    },
+    onClickshowstion: function (id) {
+      axios
+        .get(
+          "/index.php/api/journalism/list?pageNumber=1&pageSize=21&journalismtypeid=" +
+            id
+        )
+        .then((res) => {
+          console.log(res);
+          this.information = res.data;
+          if (res.status == 200 || res.statusText == "OK") {
+            this.titleName = res.data[0].name;
+          }
+          console.log(this.information);
+        });
     },
   },
 };
