@@ -559,19 +559,17 @@ li {
     white-space: wrap;
 }
 
-.j-image-play img {
-    margin-top: 3px;
-}
-
 .j-img-bottom img {
-    margin-top: 10px;
+    width: 100%;
     cursor: pointer;
 }
 
 .j-image-play {
     width: 100px;
     height: 80px;
+    line-height: 78px;
     border: 1px solid #ccc;
+    overflow: hidden;
 }
 
 .j-image-play:hover {
