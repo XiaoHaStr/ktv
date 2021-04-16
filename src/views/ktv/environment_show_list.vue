@@ -183,15 +183,15 @@ export default {
     //点击分享朋友圈
     onClickLiTwo() {
       location.href =
-        "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?to=pengyou&url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602044948&pics=&title=%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9&summary=%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.";
+        "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?to=pengyou&url=http%3A%2F%2F49.235.93.38:8001/%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602044948&pics=&title=长沙KTV&summary=长沙KTV";
     },
     onClickLiThree() {
       location.href =
-        "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602045873&title=%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9&pics=&summary=%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.&desc=%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.";
+        "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2F49.235.93.38:8001/%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602045873&title=长沙KTV&pics=&summary=长沙KTV&desc=长沙KTV";
     },
     onClickLiFour() {
       location.href =
-        "https://service.weibo.com/share/share.php?appkey=583395093&title=%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%20-%20%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.%20%20&url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602045914&source=bshare&retcode=0&ralateUid=#_loginLayer_1618403678981";
+        "https://service.weibo.com/share/share.php?appkey=583395093&title=长沙KTV&url=http%3A%2F%2F49.235.93.38:8001/%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602045914&source=bshare&retcode=0&ralateUid=#_loginLayer_1618403678981";
     },
   },
   //初始化

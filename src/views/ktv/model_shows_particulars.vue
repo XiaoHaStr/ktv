@@ -235,11 +235,11 @@ export default {
     //点击分享朋友圈
     onClickLiTwo() {
       location.href =
-        "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?to=pengyou&url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602044948&pics=&title=长沙KTV&summary=长沙高级豪华KTV";
+        "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?to=pengyou&url=http%3A%2F%2F49.235.93.38:8001/%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602044948&pics=&title=长沙KTV&summary=长沙高级豪华KTV";
     },
     onClickLiThree() {
       location.href =
-        "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602045873&title=长沙KTV&summary=长沙KTV&desc=长沙KTV";
+        "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2F49.235.93.38:8001/%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602045873&title=长沙KTV&summary=长沙KTV&desc=长沙KTV";
     },
     onClickLiFour() {
       location.href =
