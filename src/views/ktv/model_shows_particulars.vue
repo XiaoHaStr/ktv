@@ -577,6 +577,7 @@ li {
   width: 16px;
   height: 16px;
   margin-right: 10px;
+  cursor: pointer;
 }
 .share-ul li:nth-child(1) .lis {
   width: 100%;
