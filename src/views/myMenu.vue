@@ -84,7 +84,10 @@
                   placeholder="请输入您的电话"
                 ></el-input>
               </el-form-item>
-              <el-button type="primary" @click="onSubmit('form')"
+              <el-button
+                type="primary"
+                :disabled="buttonFlag"
+                @click="onSubmit('form')"
                 >提交</el-button
               >
             </el-form>
@@ -231,22 +234,36 @@ export default {
           {
             type: "email",
             message: "请输入正确的邮箱地址",
-            trigger: ["blur", "change"],
+            trigger: "blur",
           },
         ],
-        phone: [{ validator: checkPhone, trigger: ["blur", "change"] }],
+        phone: [{ validator: checkPhone, trigger: "blur" }],
       },
       phoneFlag: false,
       formFlag: false,
       footer: [],
+      buttonFlag: false,
     };
   },
   created: function () {
     this.route = location.hash.substring(1);
     this.$axios.get("/index.php/api/footer/get").then((res) => {
-      this.footer = res.data;
-      this.$store.state.bannerCode = res.data;
+      if (res.status == 200 && res.statusText == "OK") {
+        this.footer = res.data;
+        this.$store.state.bannerCode = res.data;
+      }
     });
+    this.$axios
+      .get("/index.php/api/carousel_map/list")
+      .then((response) => {
+        if (response.status == 200 && response.statusText == "OK") {
+          this.$store.state.bannerData = response.data;
+          this.$store.state.bannerFlag = true;
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   },
   mounted() {
     window.addEventListener("scroll", this.getScroll);
@@ -260,6 +277,7 @@ export default {
       // 提交留言
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.buttonFlag = true;
           this.$axios
             .get(
               "http://49.235.93.38:82/index.php/api/leaving_message/add?name=" +
@@ -277,7 +295,14 @@ export default {
                   confirmButtonText: "确定",
                   center: true,
                   callback: () => {
+                    this.buttonFlag = false;
                     this.formFlag = false;
+                    this.form = {
+                      textarea: "",
+                      name: "",
+                      email: "",
+                      phone: "",
+                    };
                   },
                 });
               }
@@ -333,14 +358,14 @@ export default {
       // 回到顶部
       var timer = setInterval(function () {
         var x = document.body.scrollTop || document.documentElement.scrollTop;
-        var juli = (0 - x) / 10;
+        var juli = (0 - x) / 8;
         juli = juli > 0 ? Math.ceil(juli) : Math.floor(juli);
         if (x <= 0) {
           clearInterval(timer);
         } else {
           window.scroll(0, x + juli);
         }
-      }, 20);
+      }, 10);
     },
     mouseoverShow() {
       // 侧边栏移入显示

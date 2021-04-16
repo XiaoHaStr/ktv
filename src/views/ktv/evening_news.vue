@@ -43,6 +43,9 @@
             <a href="javascript:;" @click="onClickevening"
               ><h4>>> 夜场新闻</h4></a
             >
+            <a href="javascript:;" v-show="titleFlag" @click="onClickback">
+              <h4>>> {{ titleName }}</h4>
+            </a>
           </div>
           <div class="lj-customModuleRow">
             <div class="lx-box">
@@ -53,23 +56,21 @@
             </div>
             <div class="l-journalism">
               <div
+                class="box-hzi"
                 v-for="(item, index) in showstion"
                 :key="index"
-                @click="onClickshowstion(item.id)"
+                @click="onClickshowstion(item.id, index)"
+                :class="index == idx ? 'positive' : ''"
               >
-                <div class="box-hzi">
-                  <div class="l-dot"></div>
-                  <a href="javascript:;"
-                    ><h5>{{ item.name }}</h5></a
-                  >
-                </div>
+                <div class="l-dot"></div>
+                <a href="javascript:;">{{ item.name }}</a>
               </div>
             </div>
             <div class="lx-box">
               <div class="l-icon-one"></div>
-              <a href="javascript:;" @click="onClickevening"
-                ><h5>{{ titleName }}</h5></a
-              >
+              <a href="javascript:;" @click="onClickevening">
+                <h5>{{ titleName }}</h5>
+              </a>
             </div>
             <div class="l-MoBody">
               <div class="l-text-list-module">
@@ -89,17 +90,22 @@
                 <el-button disabled class="bled"
                   >共有{{ pageSizeSum }}页</el-button
                 >
-                <el-button type="primary" plain :disabled="firstDisabled"
+                <el-button
+                  type="primary"
+                  plain
+                  :disabled="firstDisabled"
+                  @click="jumpFirstPage"
                   >首页</el-button
                 >
                 <el-pagination
                   background
                   small
                   layout="prev, pager, next"
+                  :page-size="pageSize"
                   :total="pageSum"
+                  :current-page="currentPage"
                   prev-text="上一页"
                   next-text="下一页"
-                  @size-change="handleSizeChange"
                   @current-change="handleCurrentChange"
                 >
                 </el-pagination>
@@ -108,6 +114,7 @@
                   plain
                   class="rih"
                   :disabled="lastDisabled"
+                  @click="jumpLastPage"
                   >尾页</el-button
                 >
               </div>
@@ -135,6 +142,9 @@ export default {
       pageSizeSum: null,
       firstDisabled: true,
       lastDisabled: false,
+      currentPage: null,
+      idx: null,
+      titleFlag: false,
     };
   },
   created() {
@@ -159,12 +169,16 @@ export default {
       .then((res) => {
         this.showstion = res.data;
         this.titleName = this.showstion[0].name;
-        console.log(this.showstion);
       });
   },
   methods: {
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    jumpFirstPage() {
+      this.handleCurrentChange(1);
+      this.currentPage = 1;
+    },
+    jumpLastPage() {
+      this.handleCurrentChange(this.pageSizeSum);
+      this.currentPage = this.pageSizeSum;
     },
     handleCurrentChange(val) {
       axios
@@ -174,7 +188,6 @@ export default {
         .then((res) => {
           this.information = res.data;
         });
-      console.log(`当前页: ${val}`);
       if (val == 1) {
         this.firstDisabled = true;
       } else {
@@ -187,19 +200,30 @@ export default {
       }
     },
     onClickevening: function () {
+      this.titleFlag = false;
+      this.idx = null;
+      axios
+        .get(
+          "/index.php/api/journalism/list?pageNumber=1&pageSize=21&journalismtypeid=1"
+        )
+        .then((res) => {
+          this.information = res.data;
+        });
+      console.log(1);
       this.$router.push("/evening_news");
     },
     onClicksju: function (id) {
       this.$router.push("/chengdu_evening/" + id);
     },
-    onClickshowstion: function (id) {
+    onClickshowstion: function (id, index) {
       axios
         .get(
           "/index.php/api/journalism/list?pageNumber=1&pageSize=21&journalismtypeid=" +
             id
         )
         .then((res) => {
-          console.log(res);
+          this.idx = index;
+          this.titleFlag = true;
           this.information = res.data;
           if (res.status == 200 || res.statusText == "OK") {
             this.titleName = res.data[0].name;

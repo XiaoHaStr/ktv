@@ -92,21 +92,38 @@
             </li>
           </ul>
         </div>
-        <!-- 分页器 -->
-        <div class="pagination-box">
-          <el-pagination background layout="total,slot" :total="6">
-            <span class="first-pager">首页</span>
-          </el-pagination>
+        <!-- 翻页部分 start -->
+        <div class="l-paging">
+          <el-button disabled class="bled">共有{{ pageSizeSum }}页</el-button>
+          <el-button
+            type="primary"
+            plain
+            :disabled="firstDisabled"
+            @click="jumpFirstPage"
+            >首页</el-button
+          >
           <el-pagination
             background
-            layout="prev, pager, next,slot"
-            :total="6"
-            next-text="下一页"
+            small
+            layout="prev, pager, next"
+            :page-size="pageSize"
+            :total="pageSum"
+            :current-page="currentPage"
             prev-text="上一页"
+            next-text="下一页"
+            @current-change="handleCurrentChange"
           >
-            <span class="first-pager">尾页</span>
           </el-pagination>
+          <el-button
+            type="primary"
+            plain
+            class="rih"
+            :disabled="lastDisabled"
+            @click="jumpLastPage"
+            >尾页</el-button
+          >
         </div>
+        <!-- 翻页部分 end -->
       </el-main>
     </el-container>
   </div>
@@ -121,10 +138,47 @@ export default {
       selectClass: "",
       iClass: "",
       liClassFlag: false,
-      modelData: null,
+      modelData: [],
+      pageNumber: 1,
+      pageSize: 6,
+      pageSum: null,
+      pageSizeSum: null,
+      firstDisabled: true,
+      lastDisabled: false,
+      currentPage: null,
     };
   },
   methods: {
+    jumpFirstPage() {
+      this.handleCurrentChange(1);
+      this.currentPage = 1;
+    },
+    jumpLastPage() {
+      this.handleCurrentChange(this.pageSizeSum);
+      this.currentPage = this.pageSizeSum;
+    },
+    handleCurrentChange(val) {
+      this.$axios
+        .get(
+          "/index.php/api/models/list?pageNumber=" +
+            val +
+            "&pageSize=" +
+            this.pageSize
+        )
+        .then((res) => {
+          this.modelData = res.data;
+        });
+      if (val == 1) {
+        this.firstDisabled = true;
+      } else {
+        this.firstDisabled = false;
+      }
+      if (val == this.pageSizeSum) {
+        this.lastDisabled = true;
+      } else {
+        this.lastDisabled = false;
+      }
+    },
     onClickUlsOne() {
       this.liClassFlag = !this.liClassFlag;
       if (this.liClassFlag) {
@@ -144,10 +198,17 @@ export default {
     },
   },
   created() {
-    var url = "/index.php/api/models/list?pageNumber=1&pageSize=6";
-    this.$axios.get(url).then((response) => {
-      if (response.status == 200 && response.statusText == "OK") {
-        this.modelData = response.data;
+    var url = "/index.php/api/models/list";
+    this.$axios.get(url).then((res) => {
+      if (res.status == 200 && res.statusText == "OK") {
+        this.pageSum = res.data.length;
+        this.pageSizeSum = Math.ceil(this.pageSum / this.pageSize);
+        this.handleCurrentChange(1);
+        if (this.pageSizeSum == 1) {
+          this.lastDisabled = true;
+        } else {
+          this.lastDisabled = false;
+        }
       }
     });
   },
@@ -352,15 +413,10 @@ li {
   background-color: #1e90ff;
   color: white;
 }
-// .model-img-hand img {
-//   position: relative;
-//   top: -70px;
-// }
 
 .el-container {
   width: 1200px;
-  height: 671px;
-  margin: 0 auto;
+  margin: 0 auto 15px;
 }
 /deep/ .el-main {
   overflow: visible;
@@ -447,31 +503,60 @@ li {
   color: black;
 }
 
-.el-pagination button,
-/deep/ .el-pagination span:not([class*="suffix"]) {
-  font-size: 12px;
-  padding: 0 5px;
-  height: 24px;
-  line-height: 24px;
-  border: 1px solid rgb(233, 229, 229);
-}
-/deep/.el-pagination.is-background .btn-next,
-/deep/ .el-pagination.is-background .btn-prev,
-/deep/.el-pagination.is-background .el-pager li {
-  background-color: white;
-}
-/deep/.el-pager li {
-  height: 24px;
-  line-height: 24px;
-}
-.first-pager {
-  // margin: 0 10px 0 0 ;
-  color: #c0c4cc;
-}
-.pagination-box {
-  position: absolute;
-  bottom: 15px;
-  right: 10px;
+.l-paging {
   display: flex;
+  margin: 11px 0;
+  justify-content: flex-end;
+  align-items: center;
+}
+.l-paging .bled {
+  width: 55px;
+  height: 22px;
+  font-size: 12px;
+  border-radius: 0;
+  padding: 0;
+  margin: 2px 7px 0 0;
+  border: 1px solid rgb(170, 170, 170);
+  color: rgb(192, 196, 204);
+}
+
+.l-paging .rih {
+  margin-right: 10px;
+}
+
+.l-paging .el-button--primary:hover {
+  color: #fff;
+  border: 1px solid rgb(64, 158, 255);
+}
+.el-button--primary {
+  width: 55px;
+  height: 22px;
+  font-size: 12px;
+  border-radius: 0;
+  padding: 0;
+  margin: 2px;
+  border: 1px solid rgb(170, 170, 170);
+  color: rgb(105, 105, 105);
+}
+.el-pagination--small .el-pager li:last-child,
+.l-paging .el-pager .number {
+  border: 1px solid rgb(170, 170, 170);
+}
+.el-pagination .btn-prev:hover,
+.el-pagination .btn-next:hover,
+.el-pagination.is-background.el-pagination--small .el-pager li:hover {
+  background-color: rgb(64, 158, 255);
+  color: #fff;
+  border: 1px solid rgb(64, 158, 255);
+}
+
+.el-pagination .btn-prev,
+.el-pagination .btn-next {
+  border: 1px solid rgb(170, 170, 170);
+}
+.el-pagination .btn-next span,
+.el-pagination .btn-prev span {
+  font-size: 12px;
+  padding: 0 6px;
 }
 </style>

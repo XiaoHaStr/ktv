@@ -1,6 +1,6 @@
 <template>
   <div class="environment">
-   <!-- banner start -->
+    <!-- banner start -->
     <div class="j-banner">
       <div class="j-banner-image">
         <img
@@ -51,7 +51,7 @@
             @mouseleave="leave"
             @mousemove="onMouseMoveSmall($event)"
           >
-            <img :src="$store.state.imagePath +appointData.image" alt />
+            <img :src="$store.state.imagePath + appointData.image" alt />
             <div class="small-box" ref="small" v-show="isShow"></div>
           </div>
           <ul>
@@ -73,10 +73,10 @@
         <div class="x-detail-box-right">
           <div class="show-box" v-show="isShow">
             <div class="showImg" ref="showImg">
-              <img :src="$store.state.imagePath +appointData.image" alt />
+              <img :src="$store.state.imagePath + appointData.image" alt />
             </div>
           </div>
-          <b>{{appointData.title}}</b>
+          <b>{{ appointData.title }}</b>
           <p>暂无价格</p>
         </div>
       </div>
@@ -85,7 +85,7 @@
       <div class="description-of-products">
         <div class="products-top">产品说明</div>
         <div class="products-bom">
-          <img :src="$store.state.imagePath +appointData.image" alt />
+          <img :src="$store.state.imagePath + appointData.image" alt />
         </div>
       </div>
       <!-- //相关产品 -->
@@ -94,12 +94,12 @@
         <div class="related-bom">
           <el-carousel :interval="40000" type="card" height="250px">
             <el-carousel-item v-for="item in dataLists" :key="item.id">
-              <a href="#" @click="onClickSelect(item.id)">
+              <a href="#" @click="onClickSelect(item)">
                 <div class="lbt-box">
                   <div class="lbt-box-img">
-                    <img :src="$store.state.imagePath +item.image" alt />
+                    <img :src="$store.state.imagePath + item.image" alt />
                   </div>
-                  <p>{{item.title}}</p>
+                  <p>{{ item.title }}</p>
                 </div>
               </a>
             </el-carousel-item>
@@ -168,56 +168,61 @@ export default {
       this.$refs.showImg.style.top = -y * 2 + "px";
     },
     //选择产地
-    onClickSelect(id) {
-      var list = this.dataLists.filter((val) => val.id == id);
-      this.appointData = list[0];
+    onClickSelect(data) {
+      this.appointData = data;
     },
-     //点击微信
-    onClickWx(e) {
-      console.log(window.location.href);
-      var url = window.location.href;
+    //点击微信
+    onClickWx() {
       this.isQrcode = true;
-      this.qrCode(url);
-      e.stopPropagation();
     },
-    qrCode(url) {
-      let qrcode = new QRCode("qrcode", {
-        width: 150, //图像宽度
-        height: 150, //图像高度
-        colorDark: "#000000", //前景色
-        colorLight: "#ffffff", //背景色
-        typeNumber: 4,
-        correctLevel: QRCode.CorrectLevel.H, //容错级别 容错级别有：（1）QRCode.CorrectLevel.L （2）QRCode.CorrectLevel.M （3）QRCode.CorrectLevel.Q （4）QRCode.CorrectLevel.H
-      });
-      qrcode.clear(); //清除二维码
-      qrcode.makeCode(url); //生成另一个新的二维码
-    },
+
     //点击二维码X
-    onClickX(){
-      this.isQrcode=false;
+    onClickX() {
+      this.isQrcode = false;
     },
     //点击分享朋友圈
-    onClickLiTwo(){
-      location.href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?to=pengyou&url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602044948&pics=&title=%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9&summary=%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.";
+    onClickLiTwo() {
+      location.href =
+        "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?to=pengyou&url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602044948&pics=&title=%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9&summary=%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.";
     },
-    onClickLiThree(){
-      location.href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602045873&title=%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9&pics=&summary=%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.&desc=%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.";
+    onClickLiThree() {
+      location.href =
+        "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602045873&title=%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9&pics=&summary=%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.&desc=%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.";
     },
-    onClickLiFour(){
-      location.href="https://service.weibo.com/share/share.php?appkey=583395093&title=%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%20-%20%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.%20%20&url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602045914&source=bshare&retcode=0&ralateUid=#_loginLayer_1618403678981";
-    }
+    onClickLiFour() {
+      location.href =
+        "https://service.weibo.com/share/share.php?appkey=583395093&title=%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%20-%20%E6%88%90%E9%83%BD%E9%94%A6%E7%BC%98%E5%9B%BD%E9%99%85%E5%A4%9C%E6%80%BB%E4%BC%9A%E4%B8%BA%E4%BC%81%E4%B8%9A%E6%8F%90%E4%BE%9B%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E4%BB%B7%E6%A0%BC%2C%E6%88%90%E9%83%BD%E5%A4%9C%E6%80%BB%E4%BC%9A%E6%A8%A1%E7%89%B9%E5%8F%82%E6%95%B0%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF.%20%20&url=http%3A%2F%2Fwww.comektv.com%2Fyczp1%2Fproducts%2F14887040.html%3Fbsh_bid%3D5602045914&source=bshare&retcode=0&ralateUid=#_loginLayer_1618403678981";
+    },
   },
   //初始化
   created() {
-    let id = this.$route.params.id;
-    var url = "http://49.235.93.38:82/index.php/api/ambient/list";
-    this.$axios.get(url).then((data) => {
+    this.$axios.get("/index.php/api/ambient/list").then((data) => {
       if (data.data && data.status == 200) {
         this.dataLists = data.data;
-        var list = this.dataLists.filter((val) => val.id == id);
-        this.appointData = list[0];
       }
     });
+    let id = this.$route.params.id;
+    var url = "/index.php/api/ambient/get?id=" + id;
+    this.$axios.get(url).then((data) => {
+      if (data.data && data.status == 200) {
+        this.appointData = data.data;
+      }
+    });
+  },
+  mounted() {
+    //初始化生成二维码
+    var url = window.location.href;
+    let qrcode = new QRCode("qrcode", {
+      width: 150, //图像宽度
+      height: 150, //图像高度
+      colorDark: "#000000", //前景色
+      colorLight: "#ffffff", //背景色
+      typeNumber: 4,
+      correctLevel: QRCode.CorrectLevel.H, //容错级别 容错级别有：（1）QRCode.CorrectLevel.L （2）QRCode.CorrectLevel.M （3）QRCode.CorrectLevel.Q （4）QRCode.CorrectLevel.H
+    });
+    qrcode.clear(); //清除二维码
+    qrcode.makeCode(url); //生成另一个新的二维码
+    // this.$refs.qrcode.innerHTML = "";
   },
 };
 </script>
@@ -232,96 +237,95 @@ export default {
   background-color: #fff;
 }
 
-
 /* banner start */
 
 .j-banner {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .j-banner-image {
-    width: 100%;
-    height: 600px;
-    background-size: 100%;
+  width: 100%;
+  height: 600px;
+  background-size: 100%;
 }
 
 .j-b-i {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .j-product {
-    position: absolute;
-    width: 803px;
-    background-color: rgba(102, 0, 0, .7);
-    top: 130px;
-    left: 50%;
-    transform: translateX(-50%);
+  position: absolute;
+  width: 803px;
+  background-color: rgba(102, 0, 0, 0.7);
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .j-product h3 {
-    color: rgb(255, 255, 255);
-    text-align: center;
-    line-height: 35px;
-    padding: 42px 0 24px 0;
-    font-size: 22px;
-    font-weight: 700;
-    font-family: "幼圆";
-    z-index: 7;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  line-height: 35px;
+  padding: 42px 0 24px 0;
+  font-size: 22px;
+  font-weight: 700;
+  font-family: "幼圆";
+  z-index: 7;
 }
 
 .j-product p {
-    text-align: center;
-    color: #FBF900;
-    padding-bottom: 29px;
-    font-size: 20px;
-    font-family: "幼圆";
-    font-weight: 400;
+  text-align: center;
+  color: #fbf900;
+  padding-bottom: 29px;
+  font-size: 20px;
+  font-family: "幼圆";
+  font-weight: 400;
 }
 
 .j-code {
-    position: absolute;
-    top: 353px;
-    left: 46.5%;
-    width: 134px;
-    height: 134px;
+  position: absolute;
+  top: 353px;
+  left: 46.5%;
+  width: 134px;
+  height: 134px;
 }
 
 .j-code img {
-    width: 100%;
+  width: 100%;
 }
 
 .j-relation {
-    position: absolute;
-    top: 499px;
-    left: 46.5%;
-    width: 135px;
-    height: 45px;
-    background-color: #D9534F;
+  position: absolute;
+  top: 499px;
+  left: 46.5%;
+  width: 135px;
+  height: 45px;
+  background-color: #d9534f;
 }
 
 .j-relation span {
-    line-height: 45px;
-    text-align: center;
-    color: #fff;
-    font-size: 16px;
+  line-height: 45px;
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
 }
 
 .j-relation:hover {
-    background-color: #c9302c;
+  background-color: #c9302c;
 }
 
 .j-cur span {
-    position: absolute;
-    bottom: 15px;
-    left: 49.5%;
-    display: block;
-    width: 17px;
-    height: 17px;
-    border: 1px solid #fff;
-    border-radius: 50%;
+  position: absolute;
+  bottom: 15px;
+  left: 49.5%;
+  display: block;
+  width: 17px;
+  height: 17px;
+  border: 1px solid #fff;
+  border-radius: 50%;
 }
 
 /* banner end */
@@ -433,7 +437,7 @@ export default {
   margin-bottom: 40px;
 }
 .qrcode-top b {
-  cursor:pointer;
+  cursor: pointer;
 }
 .x-detail-box-left li:nth-child(2) {
   background: url("../../assets/img/top_logos_sprite.png") no-repeat 0 -216px;

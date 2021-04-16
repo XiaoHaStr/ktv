@@ -59,17 +59,35 @@
     <!-- 环境展示 end -->
 
     <!-- 翻页部分 start -->
-    <div class="j-page">
-      <div class="w1200">
-        <div class="j-page-go">
-          <span>共有一页</span>
-          <i>首页</i>
-          <span>上一页</span>
-          <em>1</em>
-          <i>下一页</i>
-          <span>尾页</span>
-        </div>
-      </div>
+    <div class="l-paging">
+      <el-button disabled class="bled">共有{{ pageSizeSum }}页</el-button>
+      <el-button
+        type="primary"
+        plain
+        :disabled="firstDisabled"
+        @click="jumpFirstPage"
+        >首页</el-button
+      >
+      <el-pagination
+        background
+        small
+        layout="prev, pager, next"
+        :page-size="pageSize"
+        :total="pageSum"
+        :current-page="currentPage"
+        prev-text="上一页"
+        next-text="下一页"
+        @current-change="handleCurrentChange"
+      >
+      </el-pagination>
+      <el-button
+        type="primary"
+        plain
+        class="rih"
+        :disabled="lastDisabled"
+        @click="jumpLastPage"
+        >尾页</el-button
+      >
     </div>
     <!-- 翻页部分 end -->
   </div>
@@ -80,9 +98,46 @@ export default {
   data() {
     return {
       dataList: [],
+      pageNumber: 1,
+      pageSize: 4,
+      pageSum: null,
+      pageSizeSum: null,
+      firstDisabled: true,
+      lastDisabled: false,
+      currentPage: null,
     };
   },
   methods: {
+    jumpFirstPage() {
+      this.handleCurrentChange(1);
+      this.currentPage = 1;
+    },
+    jumpLastPage() {
+      this.handleCurrentChange(this.pageSizeSum);
+      this.currentPage = this.pageSizeSum;
+    },
+    handleCurrentChange(val) {
+      this.$axios
+        .get(
+          "/index.php/api/ambient/list?pageNumber=" +
+            val +
+            "&pageSize=" +
+            this.pageSize
+        )
+        .then((res) => {
+          this.dataList = res.data;
+        });
+      if (val == 1) {
+        this.firstDisabled = true;
+      } else {
+        this.firstDisabled = false;
+      }
+      if (val == this.pageSizeSum) {
+        this.lastDisabled = true;
+      } else {
+        this.lastDisabled = false;
+      }
+    },
     onClickList(id) {
       this.$router.push("ktvenvironmentShowList/" + id);
     },
@@ -90,15 +145,80 @@ export default {
   //初始化
   created() {
     var url = "http://49.235.93.38:82/index.php/api/ambient/list";
-    this.$axios.get(url).then((data) => {
-      if (data.data && data.status == 200) {
-        this.dataList = data.data;
+    this.$axios.get(url).then((res) => {
+      if (res.data && res.status == 200) {
+        this.pageSum = res.data.length;
+        this.pageSizeSum = Math.ceil(this.pageSum / this.pageSize);
+        this.handleCurrentChange(1);
+        if (this.pageSizeSum == 1) {
+          this.lastDisabled = true;
+        } else {
+          this.lastDisabled = false;
+        }
       }
     });
   },
 };
 </script>
 
-
 <style scoped src="@/assets/css/environment_show.css">
+</style>
+
+<style scoped>
+.l-paging {
+  display: flex;
+  margin: 11px 0;
+  justify-content: center;
+  align-items: center;
+}
+.l-paging .bled {
+  width: 55px;
+  height: 22px;
+  font-size: 12px;
+  border-radius: 0;
+  padding: 0;
+  margin: 2px 7px 0 0;
+  border: 1px solid rgb(170, 170, 170);
+  color: rgb(192, 196, 204);
+}
+
+.l-paging .rih {
+  margin-right: 10px;
+}
+
+.l-paging .el-button--primary:hover {
+  color: #fff;
+  border: 1px solid rgb(64, 158, 255);
+}
+.el-button--primary {
+  width: 55px;
+  height: 22px;
+  font-size: 12px;
+  border-radius: 0;
+  padding: 0;
+  margin: 2px;
+  border: 1px solid rgb(170, 170, 170);
+  color: rgb(105, 105, 105);
+}
+.el-pagination--small .el-pager li:last-child,
+.l-paging .el-pager .number {
+  border: 1px solid rgb(170, 170, 170);
+}
+.el-pagination .btn-prev:hover,
+.el-pagination .btn-next:hover,
+.el-pagination.is-background.el-pagination--small .el-pager li:hover {
+  background-color: rgb(64, 158, 255);
+  color: #fff;
+  border: 1px solid rgb(64, 158, 255);
+}
+
+.el-pagination .btn-prev,
+.el-pagination .btn-next {
+  border: 1px solid rgb(170, 170, 170);
+}
+.el-pagination .btn-next span,
+.el-pagination .btn-prev span {
+  font-size: 12px;
+  padding: 0 6px;
+}
 </style>

@@ -167,12 +167,20 @@
 
 .l-journalism .box-hzi {
     display: flex;
-    width: 100px;
+    width: 180px;
     height: 30px;
     margin-top: 10px;
     margin-left: 5px;
     
 }
+
+.l-journalism .positive {
+    background-color: #ddd;
+}
+.l-journalism .positive a{
+   color: rgb(5, 111, 215);
+}
+
 
 .l-journalism a:hover {
     color: rgb(5, 111, 215);

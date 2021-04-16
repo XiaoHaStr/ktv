@@ -184,18 +184,6 @@ export default {
   created() {
     window.onscroll = animate.setAnimated;
     // 背景
-    // const url = "";
-    this.$axios
-      .get("/index.php/api/carousel_map/list")
-      .then((response) => {
-        if (response.status == 200 && response.statusText == "OK") {
-          this.$store.state.bannerData = response.data;
-          this.$store.state.bannerFlag = true;
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
 
     //模特
     this.$axios.get("/index.php/api/models/list").then((response) => {

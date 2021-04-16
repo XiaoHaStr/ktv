@@ -10,7 +10,9 @@ import axios from "axios";
 Vue.prototype.$axios = axios;
 axios.defaults.baseURL = 'http://49.235.93.38:82';
 Vue.config.productionTip = false;
+
 import 'github-markdown-css/github-markdown.css'
+
 //懒加载
 import VueLazyload from 'vue-lazyload';
 Vue.use(VueLazyload);

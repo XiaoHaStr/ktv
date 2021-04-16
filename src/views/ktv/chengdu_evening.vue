@@ -6,25 +6,27 @@
         <div class="l-icon-two"></div>
         <a href="javascript:;" @click="$router.push('/index')"><h4>首页</h4></a>
         <a href="javascript:;" @click="onClickevening"><h4>>> 夜场新闻</h4></a>
-        <a href="javascript:;" @click="onClickevening"><h4>>> {{informationl.name}}</h4></a>
-        <span><i>>></i> {{ informationl.title }}</span>
+        <a href="javascript:;" @click="onClickevening"
+          ><h4>>> {{ datares.name }}</h4></a
+        >
+        <span><i>>></i> {{ datares.title }}</span>
       </div>
       <div class="chengdu-box">
         <div class="chengdu-l">
-          <a href="javascript:;">{{informationl.name}}</a>
+          <a href="javascript:;">{{ datares.name }}</a>
         </div>
         <div class="chengdu-r">
-          <div class="chengdu-txet">{{ informationl.title }}</div>
+          <div class="chengdu-txet">{{ datares.title }}</div>
           <div class="writing markdown-body">
-            <VueMarkdown :source="content"></VueMarkdown>
+            <VueMarkdown :source="datares.content"></VueMarkdown>
           </div>
           <div class="page-box">
             <div class="next-page">
               <div v-show="showPrise">
                 <i>上一篇</i>&nbsp;&nbsp;&nbsp;<a
                   href="javascript:;"
-                  @click="onClicknext"
-                  >{{ informationltwo.title }}</a
+                  @click="onClickPaging('prev')"
+                  >{{ informationPrev.title }}</a
                 >
               </div>
             </div>
@@ -32,8 +34,8 @@
               <div v-show="showprevious">
                 <i>下一篇</i>&nbsp;&nbsp;&nbsp;<a
                   href="javascript:;"
-                  @click="onClickprevious"
-                  >{{ journalismtype.title }}</a
+                  @click="onClickPaging('next')"
+                  >{{ informationlNext.title }}</a
                 >
               </div>
             </div>
@@ -54,13 +56,12 @@ export default {
   },
   data() {
     return {
-      informationl: [],
-      informationltwo: [],
-      journalismtype: [],
+      informationPrev: {},
+      informationlNext: {},
+      datares: {},
       showPrise: true,
       showprevious: true,
       msg: "http://49.235.93.38:82/",
-      datares: [],
       content: "",
     };
   },
@@ -68,36 +69,55 @@ export default {
     onClickevening: function () {
       this.$router.push("/evening_news");
     },
-    onClickprevious: function () {
-      this.$router.push("/chengdu_evening/" + this.journalismtype.id);
-      this.$router.go(0);
+    onClickPaging: function (type) {
+      let id = this.$route.params.id;
+      axios
+        .get("/index.php/api/journalism/get?id=" + id + "&operate=" + type)
+        .then((res) => {
+          console.log(res);
+          if (res.status == 200 && res.statusText == "OK") {
+            if (res.data) {
+              this.datares = res.data;
+              this.$router.push("/chengdu_evening/" + this.datares.id);
+              this.decideShow();
+            }
+          }
+        });
     },
-    onClicknext: function () {
-      this.$router.push("/chengdu_evening/" + this.informationl.id);
-      this.$router.push("/chengdu_evening/" + this.informationltwo.id);
-      this.$router.go(0);
+    decideShow: function () {
+      let id = this.$route.params.id;
+      axios
+        .get("/index.php/api/journalism/get?id=" + id + "&operate=prev")
+        .then((res) => {
+          if (res.status == 200 && res.statusText == "OK") {
+            if (res.data && res.data.title) {
+              this.showPrise = true;
+              this.informationPrev = res.data;
+            } else {
+              this.showPrise = false;
+            }
+          }
+        });
+
+      axios
+        .get("/index.php/api/journalism/get?id=" + id + "&operate=next")
+        .then((res) => {
+          if (res.status == 200 && res.statusText == "OK") {
+            if (res.data && res.data.title) {
+              this.showprevious = true;
+              this.informationlNext = res.data;
+            } else {
+              this.showprevious = false;
+            }
+          }
+        });
     },
   },
   created() {
-    axios.get("/index.php/api/journalism/list").then((res) => {
+    let id = this.$route.params.id;
+    axios.get("/index.php/api/journalism/get?id=" + id).then((res) => {
       this.datares = res.data;
-      
-      let datas = this.$route.params.id - 1;
-      this.informationl = res.data[datas];
-      console.log(this.informationl);
-      this.content = this.informationl.content;
-      if (this.informationl.id == 1) {
-        this.showPrise = false;
-        this.journalismtype = res.data[datas + 1];
-      }
-      if (this.informationl.id == 2) {
-        this.informationltwo = res.data[datas - 1];
-        console.log(this.informationltwo);
-      }
-      if (datas == this.datares.length - 1) {
-        this.showprevious = false;
-        this.journalismtype = res.data[datas - 1];
-      }
+      this.decideShow();
     });
   },
 };

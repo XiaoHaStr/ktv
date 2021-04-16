@@ -53,8 +53,8 @@ header {
 }
 
 .header-box .el-col-19 .nav li:nth-child(-n+7):hover {
-    color: #409EFF !important;
-    border-bottom: 2px solid #409EFF !important;
+    color: #409EFF;
+    border-bottom: 2px solid #409EFF;
 }
 
 .el-col-19 .nav {
